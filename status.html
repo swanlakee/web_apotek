@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Antrian - Apotek Kisah Kasih</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f2f2f2;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #ffffff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-left img {
+            width: 40px;
+        }
+
+        .header-left span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .header-right {
+            font-size: 13px;
+        }
+
+        /* ===== CONTENT ===== */
+        .container {
+            max-width: 380px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            background: #fff;
+            border-radius: 22px;
+            padding: 24px 22px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .value {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .value.small {
+            font-size: 18px;
+        }
+
+        .list {
+            margin: 6px 0 12px 0;
+            padding-left: 18px;
+            font-size: 16px;
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .status-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .status-sub {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <div class="header-left">
+        <img src="asset/logo.png" alt="Logo">
+        <span>Apotek<br>Kisah Kasih</span>
+    </div>
+    <div class="header-right">
+        Hai, Bpk. Andi!
+    </div>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="container">
+
+    <div class="card">
+
+        <div class="label">NOMOR ANTRIAN:</div>
+        <div class="value">A-03</div>
+
+        <div class="label">NAMA:</div>
+        <div class="value">ANDI SUJATMIKO</div>
+
+        <div class="label">JENIS LAYANAN:</div>
+        <div class="value small">RESEP DOKTER</div>
+
+        <div class="label">DAFTAR OBAT:</div>
+        <ul class="list">
+            <li>TRAMADOL</li>
+        </ul>
+
+        <div class="label">STATUS:</div>
+
+        <div class="status">
+            <div class="status-title">Menunggu</div>
+            <div class="status-sub">estimasi 15 menit</div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

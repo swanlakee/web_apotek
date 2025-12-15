@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Apotek Kisah Kasih</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f2f2f2;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #ffffff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-left img {
+            width: 40px;
+        }
+
+        .header-left span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .header-right {
+            font-size: 13px;
+        }
+
+        /* ===== CONTENT ===== */
+        .container {
+            max-width: 380px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 16px;
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 14px;
+        }
+
+        .btn-main {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #6cc89b;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 12px 0 20px;
+        }
+
+        /* ===== TAG LAYANAN ===== */
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            padding: 8px 14px;
+            border-radius: 20px;
+            border: 1.8px solid #6cc89b;
+            font-size: 13px;
+            cursor: pointer;
+            background: #fff;
+            transition: 0.2s;
+        }
+
+        .tag.active {
+            background: #6cc89b;
+            color: #fff;
+        }
+
+        /* ===== ANTRIAN ===== */
+        h3 {
+            margin-bottom: 12px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .card-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .qr {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 10px;
+        }
+
+        .queue-number {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .btn-secondary {
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            background: #6cc89b;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            width: 60%;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <div class="header-left">
+        <img src="asset/logo.png" alt="Logo">
+        <span>Apotek<br>Kisah Kasih</span>
+    </div>
+    <div class="header-right">
+        Hai, Bpk. Andi!
+    </div>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="container">
+
+    <h2>Dashboard Input Data</h2>
+
+    <form action="#" method="post">
+
+        <input type="text" name="nama_pasien" class="input-box" placeholder="Nama Pasien / Inisial">
+
+        <label style="font-size:14px; margin-bottom:6px; display:block;">
+            Jenis Layanan
+        </label>
+
+        <div class="service-tags">
+            <span class="tag active" onclick="selectTag(this)">Resep Dokter</span>
+            <span class="tag" onclick="selectTag(this)">Mandiri</span>
+        </div>
+
+        <input type="hidden" id="jenisLayanan" name="jenis_layanan" value="Resep Dokter">
+
+        <button type="submit" class="btn-main">
+            BUAT NOMOR ANTRIAN
+        </button>
+
+    </form>
+
+    <h3>Antrian Aktif Saat Ini</h3>
+
+    <div class="card">
+        <div class="card-name">Bpk. Andi</div>
+
+        <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=A-03"
+            class="qr"
+            alt="QR Code">
+
+        <div class="queue-number">A-03</div>
+
+        <button class="btn-secondary">CEK STATUS</button>
+    </div>
+
+</div>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+    function selectTag(tag) {
+        document.querySelectorAll('.tag')
+            .forEach(t => t.classList.remove('active'));
+
+        tag.classList.add('active');
+        document.getElementById('jenisLayanan').value = tag.innerText;
+    }
+</script>
+
+</body>
+</html>

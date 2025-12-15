@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin - Apotek Kisah Kasih</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f4f9f7;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 230px;
+    background: #ffffff;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    color: #7ac29a;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    background: #7ac29a;
+    color: #fff;
+}
+
+/* MAIN */
+.main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* TOPBAR */
+.topbar {
+    background: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 15px;
+}
+
+.card span {
+    font-size: 13px;
+    color: #777;
+}
+
+.card h3 {
+    margin: 10px 0 0;
+    font-size: 24px;
+    color: #7ac29a;
+}
+
+/* SECTION */
+.section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.section h3 {
+    color: #7ac29a;
+    margin-bottom: 12px;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+table th {
+    background: #f0f7f4;
+    padding: 12px;
+    text-align: left;
+}
+
+table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.menunggu {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.selesai {
+    background: #d4edda;
+    color: #155724;
+}
+
+.logout {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@media(max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- 🔒 PROTEKSI ADMIN -->
+<script>
+if (localStorage.getItem("role") !== "admin") {
+    window.location.href = "login.html";
+}
+</script>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>Apotek<br>Kisah Kasih</h2>
+    <a class="active">Dashboard</a>
+    <a>Data Pasien</a>
+    <a>Resep Masuk</a>
+    <a>Antrian & QR</a>
+    <a>Obat & Stok</a>
+    <a>Transaksi</a>
+    <a>Laporan</a>
+    <a>Pengaturan</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <strong>Dashboard Admin</strong>
+        <button class="logout" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="cards">
+        <div class="card">
+            <span>Resep Hari Ini</span>
+            <h3>12</h3>
+        </div>
+        <div class="card">
+            <span>Total Pasien</span>
+            <h3 id="totalPasien">0</h3>
+        </div>
+        <div class="card">
+            <span>Total Dokter</span>
+            <h3>8</h3>
+        </div>
+        <div class="card">
+            <span>Stok Menipis</span>
+            <h3>5</h3>
+        </div>
+    </div>
+
+    <!-- RESEP MASUK -->
+    <div class="section">
+        <h3>Resep Masuk</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>No Antrian</th>
+                    <th>Nama Pasien</th>
+                    <th>Dokter</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A-03</td>
+                    <td>Andi Sujatmiko</td>
+                    <td>Dr. Ahmad</td>
+                    <td><span class="status menunggu">Menunggu</span></td>
+                </tr>
+                <tr>
+                    <td>A-04</td>
+                    <td>Siti Aminah</td>
+                    <td>Dr. Lina</td>
+                    <td><span class="status selesai">Selesai</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DATA PASIEN LOGIN -->
+    <div class="section">
+        <h3>Data Pasien Login</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Pasien</th>
+                    <th>Email</th>
+                    <th>Waktu Login</th>
+                </tr>
+            </thead>
+            <tbody id="tabelPasien"></tbody>
+        </table>
+    </div>
+
+    <!-- STOK OBAT -->
+    <div class="section">
+        <h3>Stok Obat</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Obat</th>
+                    <th>Kategori</th>
+                    <th>Stok</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Paracetamol</td>
+                    <td>Analgesik</td>
+                    <td>120</td>
+                </tr>
+                <tr>
+                    <td>Amoxicillin</td>
+                    <td>Antibiotik</td>
+                    <td>20</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- SCRIPT DATA PASIEN -->
+<script>
+const dataPasien = JSON.parse(localStorage.getItem("dataPasien")) || [];
+const tabel = document.getElementById("tabelPasien");
+document.getElementById("totalPasien").innerText = dataPasien.length;
+
+if (dataPasien.length === 0) {
+    tabel.innerHTML = "<tr><td colspan='4'>Belum ada pasien login</td></tr>";
+} else {
+    dataPasien.forEach((p, i) => {
+        tabel.innerHTML += `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${p.nama || "-"}</td>
+                <td>${p.email}</td>
+                <td>${p.waktu}</td>
+            </tr>
+        `;
+    });
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "../login.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Apotek Kisah Kasih</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f2f2f2;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #fff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-left img {
+            width: 40px;
+        }
+
+        .header-left span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .header-right {
+            font-size: 13px;
+        }
+
+        /* ===== CONTENT ===== */
+        .container {
+            max-width: 380px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        /* ===== TABLE ===== */
+        .table-wrapper {
+            background: #fff;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        thead {
+            background: #e0e0e0;
+        }
+
+        th, td {
+            border: 1px solid #999;
+            padding: 6px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        th {
+            font-weight: 600;
+        }
+
+        td.kegunaan {
+            text-align: left;
+        }
+
+        .btn-delete {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* ===== BUTTON ===== */
+        .btn-finish {
+            margin: 20px auto 0;
+            display: block;
+            padding: 12px 26px;
+            border-radius: 20px;
+            border: none;
+            background: #6cc89b;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <div class="header-left">
+        <img src="asset/logo.png" alt="Logo">
+        <span>Apotek<br>Kisah Kasih</span>
+    </div>
+    <div class="header-right">
+        Hai, Bpk. Andi!
+    </div>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="container">
+
+    <h2>Checkout</h2>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nama</th>
+                    <th>Merk</th>
+                    <th>Jenis</th>
+                    <th>Kegunaan</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Paracetamol</td>
+                    <td>Panadol</td>
+                    <td>Antipiretik</td>
+                    <td class="kegunaan">Mengurangi sakit kepala & nyeri</td>
+                    <td><button class="btn-delete">🗑️</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Amoxicillin</td>
+                    <td>Amoxil</td>
+                    <td>Antibiotik</td>
+                    <td class="kegunaan">Mengatasi infeksi bakteri</td>
+                    <td><button class="btn-delete">🗑️</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Cetirizine</td>
+                    <td>Cetzine</td>
+                    <td>Antihistamin</td>
+                    <td class="kegunaan">Mengurangi gejala alergi</td>
+                    <td><button class="btn-delete">🗑️</button></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Ibuprofen</td>
+                    <td>Proris</td>
+                    <td>Analgesik</td>
+                    <td class="kegunaan">Mengurangi nyeri, radang & demam</td>
+                    <td><button class="btn-delete">🗑️</button></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Omeprazole</td>
+                    <td>Losec</td>
+                    <td>Inhibitor</td>
+                    <td class="kegunaan">Mengatasi maag & GERD</td>
+                    <td><button class="btn-delete">🗑️</button></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Metformin</td>
+                    <td>Glucophage</td>
+                    <td>Antidiabetik</td>
+                    <td class="kegunaan">Menurunkan kadar gula diabetes</td>
+                    <td><button class="btn-delete">🗑️</button></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Loratadine</td>
+                    <td>Claritine</td>
+                    <td>Antihistamin</td>
+                    <td class="kegunaan">Mengurangi gejala alergi musiman</td>
+                    <td><button class="btn-delete">🗑️</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button class="btn-finish">SELESAI</button>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Resep</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f2f2f2;
+        }
+
+        /* HEADER */
+        .header {
+            background: #fff;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header img {
+            width: 40px;
+        }
+
+        .header span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* CONTENT */
+        .container {
+            max-width: 380px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .upload-box {
+            background: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            margin-bottom: 16px;
+        }
+
+        .upload-box input {
+            width: 100%;
+        }
+
+        .preview-box {
+            background: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            display: none;
+        }
+
+        .file-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .preview-box img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn-submit {
+            display: block;
+            margin-left: auto;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background: #6cc89b;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <img src="asset/logo.png" alt="Logo">
+    <span>Apotek<br>Kisah Kasih</span>
+</div>
+
+<div class="container">
+    <h2>Resep Dokter</h2>
+
+    <form>
+
+        <!-- Upload -->
+        <div class="upload-box">
+            <input 
+                type="file" 
+                accept="image/*"
+                onchange="previewResep(this)">
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-box" id="previewBox">
+            <div class="file-name" id="fileName"></div>
+            <img id="previewImage">
+            <button type="submit" class="btn-submit">Kirim</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    function previewResep(input) {
+        const file = input.files[0];
+        if (!file) return;
+
+        document.getElementById("fileName").innerText = file.name;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("previewImage").src = e.target.result;
+            document.getElementById("previewBox").style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+
+</body>
+</html>
