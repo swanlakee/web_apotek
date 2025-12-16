@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Apotek Kisah Kasih</title>
+
+<style>
+*{box-sizing:border-box;font-family:"Segoe UI",sans-serif}
+body{margin:0;background:#f2f2f2}
+
+/* HEADER */
+.header{
+    background:#fff;
+    padding:14px 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 4px rgba(0,0,0,.1)
+}
+.header-left{display:flex;align-items:center;gap:8px}
+.header-left img{width:36px}
+.header-left span{font-size:13px;font-weight:600}
+.header-right{font-size:12px;cursor:pointer;position:relative}
+
+/* DROPDOWN */
+.dropdown{
+    display:none;
+    position:absolute;
+    right:0;
+    top:22px;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    overflow:hidden;
+    min-width:130px;
+    z-index:10
+}
+.dropdown a{
+    display:block;
+    padding:12px;
+    font-size:13px;
+    text-decoration:none;
+    color:#333
+}
+.dropdown a:hover{background:#6cc89b;color:#fff}
+
+/* CONTENT */
+.container{max-width:360px;margin:auto;padding:16px}
+
+/* FORM */
+.form-card{
+    background:#fff;
+    padding:16px;
+    border-radius:14px;
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+    margin-bottom:20px
+}
+.form-card h3{margin:0 0 14px;font-size:15px}
+.input-box{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:none;
+    margin-bottom:12px;
+    background:#f6f6f6;
+    font-size:14px
+}
+
+/* OPSI */
+.label-layanan{font-size:13px;font-weight:600;color:#555;margin-bottom:6px}
+.layanan-box{
+    display:flex;
+    background:#f1f1f1;
+    border-radius:12px;
+    padding:4px;
+    margin-bottom:14px
+}
+.layanan-btn{
+    flex:1;
+    text-align:center;
+    padding:12px 0;
+    font-size:14px;
+    font-weight:600;
+    border-radius:10px;
+    cursor:pointer;
+    color:#777
+}
+.layanan-btn.active{
+    background:#6cc89b;
+    color:#fff
+}
+
+/* BUTTON */
+.btn-main{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#6cc89b;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer
+}
+
+/* ANTRIAN */
+.queue-title{font-size:14px;font-weight:600;margin-bottom:10px}
+.queue-card{
+    background:#fff;
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.15)
+}
+.queue-name{font-size:14px;font-weight:600;margin-bottom:10px}
+.qr{width:140px;margin:0 auto 10px}
+.queue-number{font-size:26px;font-weight:700}
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 PROTEKSI USER -->
+<script>
+if(localStorage.getItem("role")!=="user"){
+    window.location.href="login2.html";
+}
+</script>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-left">
+        <img src="asset/logo.png">
+        <span>Apotek<br>Kisah Kasih</span>
+    </div>
+
+    <div class="header-right" onclick="toggleMenu()">
+        Hai, <strong id="namaUser">User</strong>!
+        <div class="dropdown" id="dropdownMenu">
+            <a href="user_profile.html">Profil</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- INPUT -->
+    <div class="form-card">
+        <h3>Dashboard Input Data</h3>
+
+        <input type="text" id="namaPasien" class="input-box"
+               placeholder="Nama Pasien / Inisial">
+
+        <div class="label-layanan">Jenis Layanan</div>
+
+        <div class="layanan-box">
+            <div class="layanan-btn active"
+                 onclick="pilihLayanan('Resep Dokter',this)">
+                Resep Dokter
+            </div>
+            <div class="layanan-btn"
+                 onclick="pilihLayanan('Mandiri',this)">
+                Mandiri
+            </div>
+        </div>
+
+        <input type="hidden" id="jenisLayanan" value="Resep Dokter">
+
+      <button type="button" class="btn-main" onclick="lanjut()">
+    LANJUTKAN
+</button>
+    </div>
+
+    <!-- HASIL ANTRIAN -->
+    <div class="queue-title">Antrian Aktif Saat Ini</div>
+
+    <div class="queue-card" id="hasilAntrian" style="display:none">
+        <div class="queue-name" id="namaKartu"></div>
+        <img id="qrCode" class="qr">
+        <div class="queue-number" id="nomorAntrian"></div>
+    </div>
+
+</div>
+
+<script>
+/* ================= USER ================= */
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if (!user) {
+    window.location.href = "login2.html";
+}
+document.getElementById("namaUser").innerText = user.nama;
+
+/* ================= DROPDOWN ================= */
+function toggleMenu(){
+    const m = document.getElementById("dropdownMenu");
+    m.style.display = m.style.display === "block" ? "none" : "block";
+}
+
+function logout(){
+    localStorage.clear();
+    window.location.href = "login2.html";
+}
+
+/* ================= PILIH LAYANAN ================= */
+function pilihLayanan(jenis, el){
+    document.querySelectorAll(".layanan-btn")
+        .forEach(b => b.classList.remove("active"));
+    el.classList.add("active");
+    document.getElementById("jenisLayanan").value = jenis;
+}
+
+/* ================= LANJUT ================= */
+function lanjut(){
+    const nama = document.getElementById("namaPasien").value.trim();
+    const layanan = document.getElementById("jenisLayanan").value;
+
+    if(nama === ""){
+        alert("Nama pasien harus diisi!");
+        return;
+    }
+
+    localStorage.setItem("dataAwal", JSON.stringify({
+        nama: nama,
+        layanan: layanan
+    }));
+
+    if(layanan === "Resep Dokter"){
+        window.location.href = "resep.html";
+    } else {
+        window.location.href = "./daftar-obat.html";
+    }
+}
+
+/* ================= TAMPILKAN ANTRIAN (FIX UTAMA) ================= */
+function tampilkanAntrian(){
+    const antrianAktif = JSON.parse(localStorage.getItem("antrianAktif"));
+    if(!antrianAktif) return;
+
+    document.getElementById("hasilAntrian").style.display = "block";
+    document.getElementById("namaKartu").innerText = antrianAktif.nama;
+    document.getElementById("nomorAntrian").innerText = antrianAktif.nomor;
+
+    document.getElementById("qrCode").src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+        encodeURIComponent(antrianAktif.nomor);
+}
+
+/* ================= PAKSA JALAN SAAT PAGE READY ================= */
+window.onload = function(){
+    tampilkanAntrian();
+};
+</script>
+
+
+</body>
+</html>

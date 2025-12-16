@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar - Apotek Kisah Kasih</title>
+
     <style>
         * {
             box-sizing: border-box;
@@ -103,7 +104,6 @@
 
 <div class="container">
     <div class="logo">
-        <!-- Ganti src dengan logo kamu -->
         <img src="asset/logo.png" alt="Apotek Kisah Kasih">
     </div>
 
@@ -113,30 +113,63 @@
 
     <h1>Daftar</h1>
 
-    <form>
+    <!-- FORM REGISTER -->
+    <form onsubmit="register(event)">
         <div class="form-group">
             <label>Username:</label>
-            <input type="text" placeholder="Masukkan username">
+            <input type="text" id="nama" placeholder="Masukkan username" required>
         </div>
 
         <div class="form-group">
             <label>Email :</label>
-            <input type="email" placeholder="Masukkan email">
+            <input type="email" id="email" placeholder="Masukkan email" required>
         </div>
 
         <div class="form-group">
             <label>Password :</label>
-            <input type="password" placeholder="Masukkan password">
+            <input type="password" id="password" placeholder="Masukkan password" required>
         </div>
 
         <button type="submit" class="btn-primary">Daftar</button>
     </form>
 
     <button class="btn-google">
-        <img src="asset/google.png" alt="Google">
+        <img src="asset/google.png">
         masuk lewat Google
     </button>
 </div>
+
+<!-- SCRIPT REGISTER -->
+<script>
+function register(event) {
+    event.preventDefault();
+
+    const nama = document.getElementById("nama").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // CEK EMAIL SUDAH ADA
+    const exists = users.find(u => u.email === email);
+    if (exists) {
+        alert("Email sudah terdaftar!");
+        return;
+    }
+
+    // SIMPAN USER
+    users.push({
+        nama: nama,
+        email: email,
+        password: password
+    });
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Registrasi berhasil! Silakan login.");
+    window.location.href = "login2.html";
+}
+</script>
 
 </body>
 </html>

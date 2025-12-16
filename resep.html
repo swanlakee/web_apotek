@@ -1,142 +1,130 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Resep</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resep Dokter</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: "Segoe UI", sans-serif;
-        }
+<style>
+*{box-sizing:border-box;font-family:"Segoe UI",sans-serif}
+body{margin:0;background:#f2f2f2}
 
-        body {
-            margin: 0;
-            background: #f2f2f2;
-        }
+.header{
+    background:#fff;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 2px 4px rgba(0,0,0,.1)
+}
+.header img{width:40px}
+.header span{font-size:14px;font-weight:600}
 
-        /* HEADER */
-        .header {
-            background: #fff;
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+.container{
+    max-width:380px;
+    margin:auto;
+    padding:20px;
+    text-align:center
+}
 
-        .header img {
-            width: 40px;
-        }
+.upload-box{
+    background:#fff;
+    padding:16px;
+    border-radius:12px;
+    box-shadow:0 2px 4px rgba(0,0,0,.15);
+    margin-bottom:16px
+}
 
-        .header span {
-            font-size: 14px;
-            font-weight: 600;
-        }
+.preview{
+    display:none;
+    background:#fff;
+    padding:16px;
+    border-radius:12px;
+    box-shadow:0 2px 4px rgba(0,0,0,.15)
+}
 
-        /* CONTENT */
-        .container {
-            max-width: 380px;
-            margin: auto;
-            padding: 20px;
-        }
+.preview img{
+    width:100%;
+    border-radius:8px;
+    margin-bottom:12px
+}
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .upload-box {
-            background: #fff;
-            padding: 14px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-            margin-bottom: 16px;
-        }
-
-        .upload-box input {
-            width: 100%;
-        }
-
-        .preview-box {
-            background: #fff;
-            padding: 14px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-            display: none;
-        }
-
-        .file-name {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .preview-box img {
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        .btn-submit {
-            display: block;
-            margin-left: auto;
-            padding: 10px 20px;
-            border-radius: 20px;
-            border: none;
-            background: #6cc89b;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-        }
-    </style>
+.btn{
+    padding:12px 20px;
+    border-radius:20px;
+    border:none;
+    background:#6cc89b;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer
+}
+</style>
 </head>
 
 <body>
 
+<script>
+const dataAwal = JSON.parse(localStorage.getItem("dataAwal"));
+if (!dataAwal || dataAwal.layanan !== "Resep Dokter") {
+    window.location.href = "user_dashboard.html";
+}
+</script>
+
 <div class="header">
-    <img src="asset/logo.png" alt="Logo">
+    <img src="asset/logo.png">
     <span>Apotek<br>Kisah Kasih</span>
 </div>
 
 <div class="container">
     <h2>Resep Dokter</h2>
+    <p><strong id="namaPasien"></strong></p>
 
-    <form>
+    <div class="upload-box">
+        <input type="file" accept="image/*" onchange="previewResep(this)">
+    </div>
 
-        <!-- Upload -->
-        <div class="upload-box">
-            <input 
-                type="file" 
-                accept="image/*"
-                onchange="previewResep(this)">
-        </div>
-
-        <!-- Preview -->
-        <div class="preview-box" id="previewBox">
-            <div class="file-name" id="fileName"></div>
-            <img id="previewImage">
-            <button type="submit" class="btn-submit">Kirim</button>
-        </div>
-
-    </form>
+    <div class="preview" id="previewBox">
+        <img id="previewImage">
+        <button class="btn" onclick="kirimResep()">
+            Kirim Resep & Ambil Nomor Antrian
+        </button>
+    </div>
 </div>
 
 <script>
-    function previewResep(input) {
-        const file = input.files[0];
-        if (!file) return;
+document.getElementById("namaPasien").innerText = dataAwal.nama;
 
-        document.getElementById("fileName").innerText = file.name;
+function previewResep(input){
+    const file = input.files[0];
+    if(!file) return;
 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById("previewImage").src = e.target.result;
-            document.getElementById("previewBox").style.display = "block";
-        };
-        reader.readAsDataURL(file);
-    }
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById("previewImage").src = e.target.result;
+        document.getElementById("previewBox").style.display = "block";
+    };
+    reader.readAsDataURL(file);
+}
+
+function kirimResep(){
+    let nomor = parseInt(localStorage.getItem("antrianResep")) || 0;
+    nomor++;
+    localStorage.setItem("antrianResep", nomor);
+
+    const nomorFinal = "R-" + String(nomor).padStart(2,"0");
+
+    localStorage.setItem("antrianAktif", JSON.stringify({
+        nama: dataAwal.nama,
+        layanan: "Resep Dokter",
+        nomor: nomorFinal
+    }));
+
+    alert("Nomor Antrian Anda: " + nomorFinal);
+
+    setTimeout(() => {
+        window.location.href = "user_dashboard.html";
+    }, 300);
+}
 </script>
 
 </body>

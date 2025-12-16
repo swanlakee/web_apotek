@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil User - Apotek Kisah Kasih</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f7f9f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 380px;
+            background: #ffffff;
+            padding: 28px 22px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        h1 {
+            color: #7ac29a;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .profile-box {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .profile-item {
+            margin-bottom: 14px;
+        }
+
+        .profile-item label {
+            font-size: 13px;
+            color: #777;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .profile-item span {
+            font-size: 15px;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            background: #7ac29a;
+            color: #fff;
+        }
+
+        .btn-logout {
+            background: #e74c3c;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🔒 PROTEKSI USER -->
+<script>
+// 🔒 PROTEKSI USER
+if (localStorage.getItem("role") !== "user") {
+    window.location.href = "login.html";
+}
+
+// AMBIL USER YANG SEDANG LOGIN
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser) {
+    window.location.href = "login.html";
+}
+
+// TAMPILKAN KE PROFIL
+document.getElementById("nama").innerText = currentUser.nama;
+document.getElementById("email").innerText = currentUser.email;
+
+// LOGOUT
+function logout() {
+    localStorage.removeItem("role");
+    localStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+}
+</script>
+
+
+<div class="container">
+    <h1>Profil Saya</h1>
+
+    <div class="profile-box">
+        <div class="profile-item">
+            <label>Nama</label>
+            <span id="nama"></span>
+        </div>
+
+        <div class="profile-item">
+            <label>Email</label>
+            <span id="email"></span>
+        </div>
+    </div>
+
+    <button class="btn btn-back" onclick="kembali()">Kembali ke Dashboard</button>
+    <button class="btn btn-logout" onclick="logout()">Logout</button>
+</div>
+
+<script>
+/* AMBIL USER TERAKHIR YANG LOGIN */
+let dataPasien = JSON.parse(localStorage.getItem("dataPasien")) || [];
+
+if (dataPasien.length > 0) {
+    const user = dataPasien[dataPasien.length - 1];
+    document.getElementById("nama").innerText = user.nama || "-";
+    document.getElementById("email").innerText = user.email || "-";
+}
+
+/* NAVIGASI */
+function kembali() {
+    window.location.href = "user_dashboard.html";
+}
+
+/* LOGOUT */
+function logout() {
+    localStorage.removeItem("role");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
